@@ -99,6 +99,9 @@ RUN cd indy-sdk*/cli && \
     cp target/*/indy-cli "$HOME/.local/bin" && \
     cargo clean
 
+RUN cd indy-sdk*/experimental/plugins/postgres_storage/src && sed -i 's/const i8/const libc::c_char/g' lib.rs
+#RUN cd indy-sdk*/wrappers/python/indy && sed -i 's/c_int/c_int64/g' ledger.py
+
 # Build and install postgres_storage plugin
 RUN cd indy-sdk*/experimental/plugins/postgres_storage && \
     cargo build ${indy_build_flags} && \
